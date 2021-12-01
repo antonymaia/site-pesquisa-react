@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -8,7 +8,7 @@ export default function FormFinal() {
   const setResposta = useStoreActions(
     (actions) => actions.respostaStores.setResposta
   );
-  const { isLoading, error, data } = useQuery("cep", () =>
+  const  data = useQuery("cep", () =>
     fetch(`https://viacep.com.br/ws/${resposta.cep}/json/`).then((res) => res.json())
   );
 
