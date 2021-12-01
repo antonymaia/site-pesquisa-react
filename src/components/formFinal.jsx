@@ -8,10 +8,11 @@ export default function FormFinal() {
   const setResposta = useStoreActions(
     (actions) => actions.respostaStores.setResposta
   );
-  const  data = useQuery("cep", () =>
+  const { isLoading, error, data } = useQuery("cep", () =>
     fetch(`https://viacep.com.br/ws/${resposta.cep}/json/`).then((res) => res.json())
   );
-
+  if (isLoading) return <div className="container">Carregando...</div>
+ 
   return (
     <div className="container">
       <div>
@@ -70,6 +71,9 @@ export default function FormFinal() {
           </div>
         </div>
       )}
+      {error && (
+        <div>Erro ao buscar cep, erro: {error.message}</div>
+      )}
       <div className="div_link_form_final">
         <Link
           to="/"
@@ -81,6 +85,7 @@ export default function FormFinal() {
             resposta.ie = "";
             resposta.rg = "";
             resposta.ativo = false;
+            resposta.cep = '';
             setResposta(resposta);
           }}
         >
